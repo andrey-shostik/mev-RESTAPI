@@ -1,0 +1,35 @@
+FORMAT: 1A
+HOST: https://api.twitter.com/1.1/
+
+# mev-test
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Show User Feed [/statuses/user_timeline.json]
+### /statuses/user_timeline.json [GET]
+OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473428421",oauth_nonce="c40s5d",oauth_version="1.0",oauth_signature="EVRBsMyZ4ky7JbvXNqZ8adKswFI%3D"
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
