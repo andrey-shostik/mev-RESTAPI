@@ -3,8 +3,452 @@ HOST: https://api.twitter.com/1.1/
 
 # mev-test
 Polls is a simple API allowing consumers to view polls and vote in them.
+## User Sign up [/oauth/authorize.json]
++ Parameters
+    + screen_name (optional, string) ... Prefills the username input box of the OAuth login screen with the given value.
+    + force_login (optional, boolean, `true`) ... Forces the user to enter their credentials to ensure the correct users account is authorized.
+    
+### /oauth/authorize.json [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
 
-## Show User Feed [/statuses/user_timeline.json]
+## User Sign in [/oauth/authenticate.json/]
++ Parameters
+    + screen_name (optional, string) ... Prefills the username input box of the OAuth login screen with the given value.
+    + force_login (optional, boolean, `true`) ... Forces the user to enter their credentials to ensure the correct users account is authorized.
+    
+### /oauth/authenticate.json/ [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
+
+## User Logout [/oauth/authenticate.json]
++ Parameters
+    + screen_name (optional, string) ... Prefills the username input box of the OAuth login screen with the given value.
+    + force_login (required, boolean, `true`) ... Forces the user to enter their credentials to ensure the correct users account is authorized.
+    
+### /oauth/authenticate.json [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
+## User Recover Password [/account/settings.json]
++ Parameters
+    + count (optional, number, `5`) ... Specifies the number of records to retrieve. Must be less than or equal to 200. Defaults to 20. The value of count is best thought of as a limit to the number of tweets to return because suspended or deleted content is removed after the count has been applied.
+    + since_id (optional, number, `12345`) ... Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since-id, the since-id will be forced to the oldest ID available.
+    + max_id (optional, number, `54321`) ... Returns results with an ID less than (that is, older than) or equal to the specified ID.
+    + trim_user (optional, boolean, `true`) ... When set to either true, t or 1, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
+    + exclude_replies (optional, boolean, `true`) ... This parameter will prevent replies from appearing in the returned timeline. Using exclude-replies with the count parameter will mean you will receive up-to count tweets — this is because the count parameter retrieves that many tweets before filtering out retweets and replies. This parameter is only supported for JSON and XML responses.
+    + contributor_details (optional, boolean, `true`) ... This parameter enhances the contributors element of the status response to include the screen-name of the contributor. By default only the user-id of the contributor is included.
+    + include_entities (optional, boolean, `false`) ... The entities node will be disincluded when set to false.
+
+### /account/settings.json [POST]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 200 (application/json)
+
+            {
+              "sleep_time": {
+                "end_time": null,
+                "enabled": false,
+                "start_time": null
+              },
+              "use_cookie_personalization": true,
+              "trend_location": [
+                {
+                  "name": "San Francisco",
+                  "placeType": {
+                    "name": "Town",
+                    "code": 7
+                  },
+                  "woeid": 2487956,
+                  "country": "United States",
+                  "url": "http://where.yahooapis.com/v1/place/2487956",
+                  "countryCode": "US",
+                  "parentid": 23424977
+                }
+              ],
+              "language": "en",
+              "discoverable_by_email": true,
+              "always_use_https": true,
+              "protected": false,
+              "geo_enabled": true,
+              "show_all_inline_media": false,
+              "screen_name": "oauth_dancer"
+            }
+
+## Show User Feed [/statuses/home_timeline.json]
++ Parameters
+    + count (optional, number, `5`) ... Specifies the number of records to retrieve. Must be less than or equal to 200. Defaults to 20. The value of count is best thought of as a limit to the number of tweets to return because suspended or deleted content is removed after the count has been applied.
+    + since_id (optional, number, `12345`) ... Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the since-id, the since-id will be forced to the oldest ID available.
+    + max_id (optional, number, `54321`) ... Returns results with an ID less than (that is, older than) or equal to the specified ID.
+    + trim_user (optional, boolean, `true`) ... When set to either true, t or 1, each tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
+    + exclude_replies (optional, boolean, `true`) ... This parameter will prevent replies from appearing in the returned timeline. Using exclude-replies with the count parameter will mean you will receive up-to count tweets — this is because the count parameter retrieves that many tweets before filtering out retweets and replies. This parameter is only supported for JSON and XML responses.
+    + contributor_details (optional, boolean, `true`) ... This parameter enhances the contributors element of the status response to include the screen-name of the contributor. By default only the user-id of the contributor is included.
+    + include_entities (optional, boolean, `false`) ... The entities node will be disincluded when set to false.
+
+### /statuses/home_timeline.json [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 200 (application/json)
+
+            [
+              {
+                "coordinates": null,
+                "truncated": false,
+                "created_at": "Tue Aug 28 21:16:23 +0000 2012",
+                "favorited": false,
+                "id_str": "240558470661799936",
+                "in_reply_to_user_id_str": null,
+                "entities": {
+                  "urls": [
+             
+                  ],
+                  "hashtags": [
+             
+                  ],
+                  "user_mentions": [
+             
+                  ]
+                },
+                "text": "just another test",
+                "contributors": null,
+                "id": 240558470661799936,
+                "retweet_count": 0,
+                "in_reply_to_status_id_str": null,
+                "geo": null,
+                "retweeted": false,
+                "in_reply_to_user_id": null,
+                "place": null,
+                "source": "<a href="//realitytechnicians.com%5C%22" rel="\"nofollow\"">OAuth Dancer Reborn</a>",
+                "user": {
+                  "name": "OAuth Dancer",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_background_tile": true,
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/730275945/oauth-dancer_normal.jpg",
+                  "created_at": "Wed Mar 03 19:37:35 +0000 2010",
+                  "location": "San Francisco, CA",
+                  "follow_request_sent": false,
+                  "id_str": "119476949",
+                  "is_translator": false,
+                  "profile_link_color": "0084B4",
+                  "entities": {
+                    "url": {
+                      "urls": [
+                        {
+                          "expanded_url": null,
+                          "url": "http://bit.ly/oauth-dancer",
+                          "indices": [
+                            0,
+                            26
+                          ],
+                          "display_url": null
+                        }
+                      ]
+                    },
+                    "description": null
+                  },
+                  "default_profile": false,
+                  "url": "http://bit.ly/oauth-dancer",
+                  "contributors_enabled": false,
+                  "favourites_count": 7,
+                  "utc_offset": null,
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/730275945/oauth-dancer_normal.jpg",
+                  "id": 119476949,
+                  "listed_count": 1,
+                  "profile_use_background_image": true,
+                  "profile_text_color": "333333",
+                  "followers_count": 28,
+                  "lang": "en",
+                  "protected": false,
+                  "geo_enabled": true,
+                  "notifications": false,
+                  "description": "",
+                  "profile_background_color": "C0DEED",
+                  "verified": false,
+                  "time_zone": null,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/80151733/oauth-dance.png",
+                  "statuses_count": 166,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/80151733/oauth-dance.png",
+                  "default_profile_image": false,
+                  "friends_count": 14,
+                  "following": false,
+                  "show_all_inline_media": false,
+                  "screen_name": "oauth_dancer"
+                },
+                "in_reply_to_screen_name": null,
+                "in_reply_to_status_id": null
+              },
+              {
+                "coordinates": {
+                  "coordinates": [
+                    -122.25831,
+                    37.871609
+                  ],
+                  "type": "Point"
+                },
+                "truncated": false,
+                "created_at": "Tue Aug 28 21:08:15 +0000 2012",
+                "favorited": false,
+                "id_str": "240556426106372096",
+                "in_reply_to_user_id_str": null,
+                "entities": {
+                  "urls": [
+                    {
+                      "expanded_url": "http://blogs.ischool.berkeley.edu/i290-abdt-s12/",
+                      "url": "http://t.co/bfj7zkDJ",
+                      "indices": [
+                        79,
+                        99
+                      ],
+                      "display_url": "blogs.ischool.berkeley.edu/i290-abdt-s12/"
+                    }
+                  ],
+                  "hashtags": [
+             
+                  ],
+                  "user_mentions": [
+                    {
+                      "name": "Cal",
+                      "id_str": "17445752",
+                      "id": 17445752,
+                      "indices": [
+                        60,
+                        64
+                      ],
+                      "screen_name": "Cal"
+                    },
+                    {
+                      "name": "Othman Laraki",
+                      "id_str": "20495814",
+                      "id": 20495814,
+                      "indices": [
+                        70,
+                        77
+                      ],
+                      "screen_name": "othman"
+                    }
+                  ]
+                },
+                "text": "lecturing at the \"analyzing big data with twitter\" class at @cal with @othman  http://t.co/bfj7zkDJ",
+                "contributors": null,
+                "id": 240556426106372096,
+                "retweet_count": 3,
+                "in_reply_to_status_id_str": null,
+                "geo": {
+                  "coordinates": [
+                    37.871609,
+                    -122.25831
+                  ],
+                  "type": "Point"
+                },
+                "retweeted": false,
+                "possibly_sensitive": false,
+                "in_reply_to_user_id": null,
+                "place": {
+                  "name": "Berkeley",
+                  "country_code": "US",
+                  "country": "United States",
+                  "attributes": {
+                  },
+                  "url": "http://api.twitter.com/1/geo/id/5ef5b7f391e30aff.json",
+                  "id": "5ef5b7f391e30aff",
+                  "bounding_box": {
+                    "coordinates": [
+                      [
+                        [
+                          -122.367781,
+                          37.835727
+                        ],
+                        [
+                          -122.234185,
+                          37.835727
+                        ],
+                        [
+                          -122.234185,
+                          37.905824
+                        ],
+                        [
+                          -122.367781,
+                          37.905824
+                        ]
+                      ]
+                    ],
+                    "type": "Polygon"
+                  },
+                  "full_name": "Berkeley, CA",
+                  "place_type": "city"
+                },
+                "source": "<a href="//www.apple.com%5C%22" rel="\"nofollow\"">Safari on iOS</a>",
+                "user": {
+                  "name": "Raffi Krikorian",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_background_tile": false,
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/1270234259/raffi-headshot-casual_normal.png",
+                  "created_at": "Sun Aug 19 14:24:06 +0000 2007",
+                  "location": "San Francisco, California",
+                  "follow_request_sent": false,
+                  "id_str": "8285392",
+                  "is_translator": false,
+                  "profile_link_color": "0084B4",
+                  "entities": {
+                    "url": {
+                      "urls": [
+                        {
+                          "expanded_url": "http://about.me/raffi.krikorian",
+                          "url": "http://t.co/eNmnM6q",
+                          "indices": [
+                            0,
+                            19
+                          ],
+                          "display_url": "about.me/raffi.krikorian"
+                        }
+                      ]
+                    },
+                    "description": {
+                      "urls": [
+             
+                      ]
+                    }
+                  },
+                  "default_profile": true,
+                  "url": "http://t.co/eNmnM6q",
+                  "contributors_enabled": false,
+                  "favourites_count": 724,
+                  "utc_offset": -28800,
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/1270234259/raffi-headshot-casual_normal.png",
+                  "id": 8285392,
+                  "listed_count": 619,
+                  "profile_use_background_image": true,
+                  "profile_text_color": "333333",
+                  "followers_count": 18752,
+                  "lang": "en",
+                  "protected": false,
+                  "geo_enabled": true,
+                  "notifications": false,
+                  "description": "Director of @twittereng's Platform Services. I break things.",
+                  "profile_background_color": "C0DEED",
+                  "verified": false,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+                  "statuses_count": 5007,
+                  "profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+                  "default_profile_image": false,
+                  "friends_count": 701,
+                  "following": true,
+                  "show_all_inline_media": true,
+                  "screen_name": "raffi"
+                },
+                "in_reply_to_screen_name": null,
+                "in_reply_to_status_id": null
+              },
+              {
+                "coordinates": null,
+                "truncated": false,
+                "created_at": "Tue Aug 28 19:59:34 +0000 2012",
+                "favorited": false,
+                "id_str": "240539141056638977",
+                "in_reply_to_user_id_str": null,
+                "entities": {
+                  "urls": [
+             
+                  ],
+                  "hashtags": [
+             
+                  ],
+                  "user_mentions": [
+             
+                  ]
+                },
+                "text": "You'd be right more often if you thought you were wrong.",
+                "contributors": null,
+                "id": 240539141056638977,
+                "retweet_count": 1,
+                "in_reply_to_status_id_str": null,
+                "geo": null,
+                "retweeted": false,
+                "in_reply_to_user_id": null,
+                "place": null,
+                "source": "web",
+                "user": {
+                  "name": "Taylor Singletary",
+                  "profile_sidebar_fill_color": "FBFBFB",
+                  "profile_background_tile": true,
+                  "profile_sidebar_border_color": "000000",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2546730059/f6a8zq58mg1hn0ha8vie_normal.jpeg",
+                  "created_at": "Wed Mar 07 22:23:19 +0000 2007",
+                  "location": "San Francisco, CA",
+                  "follow_request_sent": false,
+                  "id_str": "819797",
+                  "is_translator": false,
+                  "profile_link_color": "c71818",
+                  "entities": {
+                    "url": {
+                      "urls": [
+                        {
+                          "expanded_url": "http://www.rebelmouse.com/episod/",
+                          "url": "http://t.co/Lxw7upbN",
+                          "indices": [
+                            0,
+                            20
+                          ],
+                          "display_url": "rebelmouse.com/episod/"
+                        }
+                      ]
+                    },
+                    "description": {
+                      "urls": [
+             
+                      ]
+                    }
+                  },
+                  "default_profile": false,
+                  "url": "http://t.co/Lxw7upbN",
+                  "contributors_enabled": false,
+                  "favourites_count": 15990,
+                  "utc_offset": -28800,
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2546730059/f6a8zq58mg1hn0ha8vie_normal.jpeg",
+                  "id": 819797,
+                  "listed_count": 340,
+                  "profile_use_background_image": true,
+                  "profile_text_color": "D20909",
+                  "followers_count": 7126,
+                  "lang": "en",
+                  "protected": false,
+                  "geo_enabled": true,
+                  "notifications": false,
+                  "description": "Reality Technician, Twitter API team, synthesizer enthusiast; a most excellent adventure in timelines. I know it's hard to believe in something you can't see.",
+                  "profile_background_color": "000000",
+                  "verified": false,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/643655842/hzfv12wini4q60zzrthg.png",
+                  "statuses_count": 18076,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/643655842/hzfv12wini4q60zzrthg.png",
+                  "default_profile_image": false,
+                  "friends_count": 5444,
+                  "following": true,
+                  "show_all_inline_media": true,
+                  "screen_name": "episod"
+                },
+                "in_reply_to_screen_name": null,
+                "in_reply_to_status_id": null
+              }
+            ]
+
+## Get List of User Tweets [/statuses/user_timeline.json]
 + Parameters
     + user_id (optional, number, `12345`) ... Set to `true` to remove instead of deactivate
     + screen_name (optional, string, `notario`) ... The screen name of the user for whom to return results for.
@@ -224,3 +668,2491 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             "in_reply_to_status_id": null
           }
         ]
+        
+        
+## Post tweet [/statuses/update.json]
++ Parameters
+    + status (required, string) ... The text of your status update, typically up to 140 characters. URL encode as necessary. t.co link wrapping may affect character counts.
+    + in_reply_to_status_id (optional) ... The ID of an existing status that the update is in reply to. Note:: This parameter will be ignored unless the author of the tweet this parameter references is mentioned within the status text. Therefore, you must include @username, where username is the author of the referenced tweet, within the update.
+    + possibly_sensitive (optional, boolean, `true`) ... If you upload Tweet media that might be considered sensitive content such as nudity, violence, or medical procedures, you should set this value to true. See Media setting and best practices for more context. Defaults to false.
+    + lat (optional, number, `37.7821120598956`) ... The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn’t a corresponding long parameter.
+    + long (optional, number, `-122.400612831116`) ... The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.
+    + place_id (optional, string, `df51dec6f4ee2b2c`) ... A place in the world.
+    + display_coordinates (optional, boolean, `true`) ... Whether or not to put a pin on the exact coordinates a tweet has been sent from.
+    + trim_user (optional, boolean, `true`) ... When set to either true, t or 1, each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
+    + media_ids (optional, `471592142565957632`) ... A list of media-ids to associate with the Tweet. You may include up to 4 photos or 1 animated GIF or 1 video in a Tweet. See Uploading Media for further details on uploading media.
+    
+### /statuses/update.json [POST]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 201 (application/json)
+
+            {
+              "coordinates": null,
+              "favorited": false,
+              "created_at": "Wed Sep 05 00:37:15 +0000 2012",
+              "truncated": false,
+              "id_str": "243145735212777472",
+              "entities": {
+                "urls": [
+             
+                ],
+                "hashtags": [
+                  {
+                    "text": "peterfalk",
+                    "indices": [
+                      35,
+                      45
+                    ]
+                  }
+                ],
+                "user_mentions": [
+             
+                ]
+              },
+              "in_reply_to_user_id_str": null,
+              "text": "Maybe he'll finally find his keys. #peterfalk",
+              "contributors": null,
+              "retweet_count": 0,
+              "id": 243145735212777472,
+              "in_reply_to_status_id_str": null,
+              "geo": null,
+              "retweeted": false,
+              "in_reply_to_user_id": null,
+              "place": null,
+              "user": {
+                "name": "Jason Costa",
+                "profile_sidebar_border_color": "86A4A6",
+                "profile_sidebar_fill_color": "A0C5C7",
+                "profile_background_tile": false,
+                "profile_image_url": "http://a0.twimg.com/profile_images/1751674923/new_york_beard_normal.jpg",
+                "created_at": "Wed May 28 00:20:15 +0000 2008",
+                "location": "",
+                "is_translator": true,
+                "follow_request_sent": false,
+                "id_str": "14927800",
+                "profile_link_color": "FF3300",
+                "entities": {
+                  "url": {
+                    "urls": [
+                      {
+                        "expanded_url": "http://www.jason-costa.blogspot.com/",
+                        "url": "http://t.co/YCA3ZKY",
+                        "indices": [
+                          0,
+                          19
+                        ],
+                        "display_url": "jason-costa.blogspot.com"
+                      }
+                    ]
+                  },
+                  "description": {
+                    "urls": [
+             
+                    ]
+                  }
+                },
+                "default_profile": false,
+                "contributors_enabled": false,
+                "url": "http://t.co/YCA3ZKY",
+                "favourites_count": 883,
+                "utc_offset": -28800,
+                "id": 14927800,
+                "profile_image_url_https": "https://si0.twimg.com/profile_images/1751674923/new_york_beard_normal.jpg",
+                "profile_use_background_image": true,
+                "listed_count": 150,
+                "profile_text_color": "333333",
+                "protected": false,
+                "lang": "en",
+                "followers_count": 8760,
+                "time_zone": "Pacific Time (US & Canada)",
+                "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme6/bg.gif",
+                "verified": false,
+                "profile_background_color": "709397",
+                "notifications": false,
+                "description": "Platform at Twitter",
+                "geo_enabled": true,
+                "statuses_count": 5532,
+                "default_profile_image": false,
+                "friends_count": 166,
+                "profile_background_image_url": "http://a0.twimg.com/images/themes/theme6/bg.gif",
+                "show_all_inline_media": true,
+                "screen_name": "jasoncosta",
+                "following": false
+              },
+              "source": "<a href="//jason-costa.blogspot.com%5C%22" rel="\"nofollow\"">My Shiny App</a>",
+              "in_reply_to_screen_name": null,
+              "in_reply_to_status_id": null
+            }
+        
+## Retweet Tweet [/statuses/retweet/:id]
++ Parameters
+    + id (required, number `123`) ... The numerical ID of the desired status.
+    + trim_user (optional, boolean, `true`) ... When set to either true, t or 1, each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
+    
+### /statuses/retweet/:id [POST]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 201 (application/json)
+
+            {
+                "truncated": false,
+                "retweeted": false,
+                "id_str": "243149503589400576",
+                "coordinates": null,
+                "in_reply_to_screen_name": null,
+                "in_reply_to_status_id_str": null,
+                "geo": null,
+                "in_reply_to_status_id": null,
+                "contributors": null,
+                "source": "\u003Ca href=\"http:\/\/jason-costa.blogspot.com\" rel=\"nofollow\"\u003EMy Shiny App\u003C\/a\u003E",
+                "in_reply_to_user_id_str": null,
+                "created_at": "Wed Sep 05 00:52:13 +0000 2012",
+                "favorited": false,
+                "entities": {
+                    "user_mentions": [{
+                        "indices": [3, 10],
+                        "id_str": "7588892",
+                        "screen_name": "kurrik",
+                        "name": "Arne Roomann-Kurrik",
+                        "id": 7588892
+                    }],
+                    "hashtags": [],
+                    "urls": []
+                },
+                "user": {
+                    "following": false,
+                    "geo_enabled": true,
+                    "profile_background_image_url": "http:\/\/a0.twimg.com\/images\/themes\/theme6\/bg.gif",
+                    "description": "Platform at Twitter",
+                    "notifications": false,
+                    "friends_count": 166,
+                    "profile_link_color": "FF3300",
+                    "location": "",
+                    "id_str": "14927800",
+                    "default_profile_image": false,
+                    "profile_image_url_https": "https:\/\/si0.twimg.com\/profile_images\/1751674923\/new_york_beard_normal.jpg",
+                    "favourites_count": 883,
+                    "profile_background_color": "709397",
+                    "url": "http:\/\/t.co\/YCA3ZKY",
+                    "screen_name": "jasoncosta",
+                    "profile_background_tile": false,
+                    "contributors_enabled": false,
+                    "verified": false,
+                    "created_at": "Wed May 28 00:20:15 +0000 2008",
+                    "profile_sidebar_fill_color": "A0C5C7",
+                    "followers_count": 8761,
+                    "lang": "en",
+                    "listed_count": 150,
+                    "profile_sidebar_border_color": "86A4A6",
+                    "protected": false,
+                    "entities": {
+                        "description": {
+                            "urls": []
+                        },
+                        "url": {
+                            "urls": [{
+                                "indices": [0, 19],
+                                "url": "http:\/\/t.co\/YCA3ZKY",
+                                "display_url": "jason-costa.blogspot.com",
+                                "expanded_url": "http:\/\/www.jason-costa.blogspot.com\/"
+                            }]
+                        }
+                    },
+                    "show_all_inline_media": true,
+                    "follow_request_sent": false,
+                    "statuses_count": 5533,
+                    "profile_background_image_url_https": "https:\/\/si0.twimg.com\/images\/themes\/theme6\/bg.gif",
+                    "name": "Jason Costa",
+                    "default_profile": false,
+                    "profile_use_background_image": true,
+                    "profile_image_url": "http:\/\/a0.twimg.com\/profile_images\/1751674923\/new_york_beard_normal.jpg",
+                    "id": 14927800,
+                    "is_translator": true,
+                    "time_zone": "Pacific Time (US & Canada)",
+                    "utc_offset": -28800,
+                    "profile_text_color": "333333"
+                },
+                "place": null,
+                "id": 243149503589400576,
+                "retweeted_status": {
+                    "truncated": false,
+                    "retweeted": false,
+                    "id_str": "241259202004267009",
+                    "coordinates": null,
+                    "in_reply_to_screen_name": null,
+                    "in_reply_to_status_id_str": null,
+                    "geo": null,
+                    "in_reply_to_status_id": null,
+                    "contributors": null,
+                    "source": "web",
+                    "in_reply_to_user_id_str": null,
+                    "created_at": "Thu Aug 30 19:40:50 +0000 2012",
+                    "favorited": false,
+                    "entities": {
+                        "user_mentions": [],
+                        "hashtags": [],
+                        "urls": []
+                    },
+                    "user": {
+                        "following": true,
+                        "geo_enabled": true,
+                        "profile_background_image_url": "http:\/\/a0.twimg.com\/profile_background_images\/342542280\/background7.png",
+                        "description": "Developer Advocate at Twitter, practitioner of dark sandwich arts. ",
+                        "notifications": false,
+                        "friends_count": 500,
+                        "profile_link_color": "0084B4",
+                        "location": "Scan Francesco",
+                        "id_str": "7588892",
+                        "default_profile_image": false,
+                        "profile_image_url_https": "https:\/\/si0.twimg.com\/profile_images\/24229162\/arne001_normal.jpg",
+                        "favourites_count": 624,
+                        "profile_background_color": "8FC1FF",
+                        "url": "http:\/\/t.co\/bGmVjSox",
+                        "screen_name": "kurrik",
+                        "profile_background_tile": true,
+                        "contributors_enabled": false,
+                        "verified": false,
+                        "created_at": "Thu Jul 19 15:58:07 +0000 2007",
+                        "profile_sidebar_fill_color": "C7E0FF",
+                        "followers_count": 3514,
+                        "lang": "en",
+                        "listed_count": 165,
+                        "profile_sidebar_border_color": "6BAEFF",
+                        "protected": false,
+                        "entities": {
+                            "description": {
+                                "urls": []
+                            },
+                            "url": {
+                                "urls": [{
+                                    "indices": [0, 20],
+                                    "url": "http:\/\/t.co\/bGmVjSox",
+                                    "display_url": "start.roomanna.com",
+                                    "expanded_url": "http:\/\/start.roomanna.com\/"
+                                }]
+                            }
+                        },
+                        "show_all_inline_media": false,
+                        "follow_request_sent": false,
+                        "statuses_count": 2963,
+                        "profile_background_image_url_https": "https:\/\/si0.twimg.com\/profile_background_images\/342542280\/background7.png",
+                        "name": "Arne Roomann-Kurrik",
+                        "default_profile": false,
+                        "profile_use_background_image": true,
+                        "profile_image_url": "http:\/\/a0.twimg.com\/profile_images\/24229162\/arne001_normal.jpg",
+                        "id": 7588892,
+                        "is_translator": false,
+                        "time_zone": "Pacific Time (US & Canada)",
+                        "utc_offset": -28800,
+                        "profile_text_color": "000000"
+                    },
+                    "place": null,
+                    "id": 241259202004267009,
+                    "retweet_count": 1,
+                    "in_reply_to_user_id": null,
+                    "text": "tcptrace and imagemagick - two command line tools TOTALLY worth learning"
+                },
+                "retweet_count": 1,
+                "in_reply_to_user_id": null,
+                "text": "RT @kurrik: tcptrace and imagemagick - two command line tools TOTALLY worth learning"
+            }
+            
+## Comment Tweet [/statuses/update.json?]
++ Parameters
+    + status (required, string, `text text`) ... The text of your status update, typically up to 140 characters. URL encode as necessary. t.co link wrapping may affect character counts.
+    + in_reply_to_status_id (required, string, `123`) ... The ID of an existing status that the update is in reply to. Note:: This parameter will be ignored unless the author of the tweet this parameter references is mentioned within the status text. Therefore, you must include @username, where username is the author of the referenced tweet, within the update.
+    + possibly_sensitive (optional, boolean, `true`) ... If you upload Tweet media that might be considered sensitive content such as nudity, violence, or medical procedures, you should set this value to true. See Media setting and best practices for more context. Defaults to false.
+    + lat (optional, number, `37.7821120598956`) ... The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn’t a corresponding long parameter.
+    + long (optional, number, `-122.400612831116`) ... The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.
+    + place_id (optional, string, `df51dec6f4ee2b2c`) ... A place in the world.
+    + display_coordinates (optional, boolean, `true`) ... Whether or not to put a pin on the exact coordinates a tweet has been sent from.
+    + trim_user (optional, boolean, `true`) ... When set to either true, t or 1, each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
+    + media_ids (optional, `471592142565957632`) ... A list of media-ids to associate with the Tweet. You may include up to 4 photos or 1 animated GIF or 1 video in a Tweet. See Uploading Media for further details on uploading media.
+    
+### /statuses/update.json [POST]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 201 (application/json)
+
+            {
+              "coordinates": null,
+              "favorited": false,
+              "created_at": "Wed Sep 05 00:37:15 +0000 2012",
+              "truncated": false,
+              "id_str": "243145735212777472",
+              "entities": {
+                "urls": [
+             
+                ],
+                "hashtags": [
+                  {
+                    "text": "peterfalk",
+                    "indices": [
+                      35,
+                      45
+                    ]
+                  }
+                ],
+                "user_mentions": [
+             
+                ]
+              },
+              "in_reply_to_user_id_str": null,
+              "text": "Maybe he'll finally find his keys. #peterfalk",
+              "contributors": null,
+              "retweet_count": 0,
+              "id": 243145735212777472,
+              "in_reply_to_status_id_str": null,
+              "geo": null,
+              "retweeted": false,
+              "in_reply_to_user_id": null,
+              "place": null,
+              "user": {
+                "name": "Jason Costa",
+                "profile_sidebar_border_color": "86A4A6",
+                "profile_sidebar_fill_color": "A0C5C7",
+                "profile_background_tile": false,
+                "profile_image_url": "http://a0.twimg.com/profile_images/1751674923/new_york_beard_normal.jpg",
+                "created_at": "Wed May 28 00:20:15 +0000 2008",
+                "location": "",
+                "is_translator": true,
+                "follow_request_sent": false,
+                "id_str": "14927800",
+                "profile_link_color": "FF3300",
+                "entities": {
+                  "url": {
+                    "urls": [
+                      {
+                        "expanded_url": "http://www.jason-costa.blogspot.com/",
+                        "url": "http://t.co/YCA3ZKY",
+                        "indices": [
+                          0,
+                          19
+                        ],
+                        "display_url": "jason-costa.blogspot.com"
+                      }
+                    ]
+                  },
+                  "description": {
+                    "urls": [
+             
+                    ]
+                  }
+                },
+                "default_profile": false,
+                "contributors_enabled": false,
+                "url": "http://t.co/YCA3ZKY",
+                "favourites_count": 883,
+                "utc_offset": -28800,
+                "id": 14927800,
+                "profile_image_url_https": "https://si0.twimg.com/profile_images/1751674923/new_york_beard_normal.jpg",
+                "profile_use_background_image": true,
+                "listed_count": 150,
+                "profile_text_color": "333333",
+                "protected": false,
+                "lang": "en",
+                "followers_count": 8760,
+                "time_zone": "Pacific Time (US & Canada)",
+                "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme6/bg.gif",
+                "verified": false,
+                "profile_background_color": "709397",
+                "notifications": false,
+                "description": "Platform at Twitter",
+                "geo_enabled": true,
+                "statuses_count": 5532,
+                "default_profile_image": false,
+                "friends_count": 166,
+                "profile_background_image_url": "http://a0.twimg.com/images/themes/theme6/bg.gif",
+                "show_all_inline_media": true,
+                "screen_name": "jasoncosta",
+                "following": false
+              },
+              "source": "<a href="//jason-costa.blogspot.com%5C%22" rel="\"nofollow\"">My Shiny App</a>",
+              "in_reply_to_screen_name": null,
+              "in_reply_to_status_id": null
+            }
+            
+## Show Tweet Comments [/statuses/update.json/]
++ Parameters
+    + status (required, string, `text text`) ... The text of your status update, typically up to 140 characters. URL encode as necessary. t.co link wrapping may affect character counts.
+    + in_reply_to_status_id (required, string, `123`) ... The ID of an existing status that the update is in reply to. Note:: This parameter will be ignored unless the author of the tweet this parameter references is mentioned within the status text. Therefore, you must include @username, where username is the author of the referenced tweet, within the update.
+    + possibly_sensitive (optional, boolean, `true`) ... If you upload Tweet media that might be considered sensitive content such as nudity, violence, or medical procedures, you should set this value to true. See Media setting and best practices for more context. Defaults to false.
+    + lat (optional, number, `37.7821120598956`) ... The latitude of the location this tweet refers to. This parameter will be ignored unless it is inside the range -90.0 to +90.0 (North is positive) inclusive. It will also be ignored if there isn’t a corresponding long parameter.
+    + long (optional, number, `-122.400612831116`) ... The longitude of the location this tweet refers to. The valid ranges for longitude is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if outside that range, if it is not a number, if geo_enabled is disabled, or if there not a corresponding lat parameter.
+    + place_id (optional, string, `df51dec6f4ee2b2c`) ... A place in the world.
+    + display_coordinates (optional, boolean, `true`) ... Whether or not to put a pin on the exact coordinates a tweet has been sent from.
+    + trim_user (optional, boolean, `true`) ... When set to either true, t or 1, each Tweet returned in a timeline will include a user object including only the status authors numerical ID. Omit this parameter to receive the complete user object.
+    + media_ids (optional, `471592142565957632`) ... A list of media-ids to associate with the Tweet. You may include up to 4 photos or 1 animated GIF or 1 video in a Tweet. See Uploading Media for further details on uploading media.
+    
+### /statuses/update.json [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 201 (application/json)
+
+## Follow User [/friendships/create.json]
++ Parameters
+    + screen_name (optional, string, `noradio`) ... The screen name of the user for whom to befriend.
+    + user_id (optional, string, `12345`) ... The ID of the user for whom to befriend.
+    + follow (optional, boolean, `true`) ... Enable notifications for the target user.
+   
+### /friendships/create.json [POST]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 201 (application/json)
+
+            {
+              "name": "Doug Williams",
+              "profile_sidebar_border_color": "87BC44",
+              "profile_sidebar_fill_color": "F2F8FC",
+              "profile_background_tile": false,
+              "created_at": "Sun Mar 18 06:42:26 +0000 2007",
+              "profile_image_url": "http://a0.twimg.com/profile_images/1947332700/dougw_avatar_can2_normal.jpg",
+              "location": "San Francisco, CA",
+              "profile_link_color": "0000FF",
+              "follow_request_sent": false,
+              "is_translator": false,
+              "id_str": "1401881",
+              "entities": {
+                "description": {
+                  "urls": [
+             
+                  ]
+                }
+              },
+              "default_profile": false,
+              "url": null,
+              "favourites_count": 2620,
+              "contributors_enabled": true,
+              "utc_offset": -28800,
+              "id": 1401881,
+              "profile_image_url_https": "https://si0.twimg.com/profile_images/1947332700/dougw_avatar_can2_normal.jpg",
+              "listed_count": 890,
+              "profile_use_background_image": true,
+              "profile_text_color": "000000",
+              "protected": false,
+              "lang": "en",
+              "followers_count": 306557,
+              "geo_enabled": true,
+              "time_zone": "Pacific Time (US & Canada)",
+              "notifications": false,
+              "verified": false,
+              "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/2752608/twitter_bg_grass.jpg",
+              "profile_background_color": "9AE4E8",
+              "description": "Partnerships at @twitter",
+              "profile_background_image_url": "http://a0.twimg.com/profile_background_images/2752608/twitter_bg_grass.jpg",
+              "friends_count": 1284,
+              "statuses_count": 11873,
+              "default_profile_image": false,
+              "status": {
+                "coordinates": null,
+                "truncated": false,
+                "created_at": "Sun Aug 26 21:58:35 +0000 2012",
+                "favorited": false,
+                "id_str": "239844310982459392",
+                "entities": {
+                  "urls": [
+             
+                  ],
+                  "media": [
+                    {
+                      "media_url_https": "https://p.twimg.com/A1QZIU3CAAAnCkS.jpg",
+                      "expanded_url": "http://twitter.com/dougw/status/239844310982459392/photo/1",
+                      "sizes": {
+                        "large": {
+                          "w": 816,
+                          "resize": "fit",
+                          "h": 612
+                        },
+                        "medium": {
+                          "w": 600,
+                          "resize": "fit",
+                          "h": 450
+                        },
+                        "small": {
+                          "w": 340,
+                          "resize": "fit",
+                          "h": 255
+                        },
+                        "thumb": {
+                          "w": 150,
+                          "resize": "crop",
+                          "h": 150
+                        }
+                      },
+                      "id_str": "239844310986653696",
+                      "url": "http://t.co/1uG4mhaB",
+                      "id": 239844310986653696,
+                      "type": "photo",
+                      "indices": [
+                        45,
+                        65
+                      ],
+                      "media_url": "http://p.twimg.com/A1QZIU3CAAAnCkS.jpg",
+                      "display_url": "pic.twitter.com/1uG4mhaB"
+                    }
+                  ],
+                  "hashtags": [
+             
+                  ],
+                  "user_mentions": [
+             
+                  ]
+                },
+                "in_reply_to_user_id_str": null,
+                "text": "Warm day by the Bay. Watching boats sail by. http://t.co/1uG4mhaB",
+                "contributors": null,
+                "id": 239844310982459392,
+                "retweet_count": 0,
+                "in_reply_to_status_id_str": null,
+                "geo": null,
+                "retweeted": false,
+                "in_reply_to_user_id": null,
+                "possibly_sensitive": false,
+                "place": null,
+                "possibly_sensitive_editable": true,
+                "source": "<a href="//www.apple.com%5C%22" rel="\"nofollow\"">Camera on iOS</a>",
+                "in_reply_to_screen_name": null,
+                "in_reply_to_status_id": null
+              },
+              "show_all_inline_media": true,
+              "screen_name": "dougw",
+              "following": true
+            }
+            
+## Unfollow User [/friendships/destroy.json]
++ Parameters
+    + screen_name (optional, string, `noradio`) ... The screen name of the user for whom to befriend.
+    + user_id (optional, string, `12345`) ... The ID of the user for whom to befriend.
+   
+### /friendships/destroy.json [POST]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 201 (application/json)
+
+            {
+              "name": "Doug Williams",
+              "profile_sidebar_border_color": "87BC44",
+              "profile_sidebar_fill_color": "F2F8FC",
+              "profile_background_tile": false,
+              "created_at": "Sun Mar 18 06:42:26 +0000 2007",
+              "profile_image_url": "http://a0.twimg.com/profile_images/1947332700/dougw_avatar_can2_normal.jpg",
+              "location": "San Francisco, CA",
+              "profile_link_color": "0000FF",
+              "follow_request_sent": false,
+              "is_translator": false,
+              "id_str": "1401881",
+              "entities": {
+                "description": {
+                  "urls": [
+             
+                  ]
+                }
+              },
+              "default_profile": false,
+              "url": null,
+              "favourites_count": 2620,
+              "contributors_enabled": true,
+              "utc_offset": -28800,
+              "id": 1401881,
+              "profile_image_url_https": "https://si0.twimg.com/profile_images/1947332700/dougw_avatar_can2_normal.jpg",
+              "listed_count": 890,
+              "profile_use_background_image": true,
+              "profile_text_color": "000000",
+              "protected": false,
+              "lang": "en",
+              "followers_count": 306556,
+              "geo_enabled": true,
+              "time_zone": "Pacific Time (US & Canada)",
+              "notifications": false,
+              "verified": false,
+              "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/2752608/twitter_bg_grass.jpg",
+              "profile_background_color": "9AE4E8",
+              "description": "Partnerships at @twitter",
+              "profile_background_image_url": "http://a0.twimg.com/profile_background_images/2752608/twitter_bg_grass.jpg",
+              "friends_count": 1284,
+              "statuses_count": 11873,
+              "default_profile_image": false,
+              "status": {
+                "coordinates": null,
+                "truncated": false,
+                "created_at": "Sun Aug 26 21:58:35 +0000 2012",
+                "favorited": false,
+                "id_str": "239844310982459392",
+                "entities": {
+                  "urls": [
+             
+                  ],
+                  "media": [
+                    {
+                      "media_url_https": "https://p.twimg.com/A1QZIU3CAAAnCkS.jpg",
+                      "expanded_url": "http://twitter.com/dougw/status/239844310982459392/photo/1",
+                      "sizes": {
+                        "large": {
+                          "w": 816,
+                          "resize": "fit",
+                          "h": 612
+                        },
+                        "medium": {
+                          "w": 600,
+                          "resize": "fit",
+                          "h": 450
+                        },
+                        "small": {
+                          "w": 340,
+                          "resize": "fit",
+                          "h": 255
+                        },
+                        "thumb": {
+                          "w": 150,
+                          "resize": "crop",
+                          "h": 150
+                        }
+                      },
+                      "id_str": "239844310986653696",
+                      "url": "http://t.co/1uG4mhaB",
+                      "id": 239844310986653696,
+                      "type": "photo",
+                      "indices": [
+                        45,
+                        65
+                      ],
+                      "media_url": "http://p.twimg.com/A1QZIU3CAAAnCkS.jpg",
+                      "display_url": "pic.twitter.com/1uG4mhaB"
+                    }
+                  ],
+                  "hashtags": [
+             
+                  ],
+                  "user_mentions": [
+             
+                  ]
+                },
+                "in_reply_to_user_id_str": null,
+                "text": "Warm day by the Bay. Watching boats sail by. http://t.co/1uG4mhaB",
+                "contributors": null,
+                "id": 239844310982459392,
+                "retweet_count": 0,
+                "in_reply_to_status_id_str": null,
+                "geo": null,
+                "retweeted": false,
+                "in_reply_to_user_id": null,
+                "possibly_sensitive": false,
+                "place": null,
+                "possibly_sensitive_editable": true,
+                "source": "<a href="//www.apple.com%5C%22" rel="\"nofollow\"">Camera on iOS</a>",
+                "in_reply_to_screen_name": null,
+                "in_reply_to_status_id": null
+              },
+              "show_all_inline_media": true,
+              "screen_name": "dougw",
+              "following": false
+            }
+            
+## User Followers  [/followers/list.json]
++ Parameters
+    + screen_name (optional, string, `noradio`) ... The screen name of the user for whom to befriend.
+    + user_id (optional, string, `12345`) ... The ID of the user for whom to befriend.
+    + cursor (optional, integer, `12893764510938`) ... Causes the results to be broken into pages. If no cursor is provided, a value of -1 will be assumed, which is the first “page.”
+    + count (optional, integer, `42`) ... The number of users to return per page, up to a maximum of 200. Defaults to 20.
+    + skip_status (optional, boolean, `false`) ... When set to either true, t or 1, statuses will not be included in the returned user objects. If set to any other value, statuses will be included.
+    + include_user_entities (optional, boolean, `false`) .. The user object entities node will not be included when set to false.
+### /followers/list.json [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
+
++ Response 200 (application/json)
+
+            {
+              "users": [
+                {
+                  "id": 2960784075,
+                  "id_str": "2960784075",
+                  "name": "Jesus Rafael Abreu M",
+                  "screen_name": "chuomaraver",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 1,
+                  "friends_count": 101,
+                  "listed_count": 0,
+                  "created_at": "Sun Jan 04 19:58:06 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 0,
+                  "lang": "es",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_4_normal.png",
+                  "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_4_normal.png",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": true,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2959453074,
+                  "id_str": "2959453074",
+                  "name": "lama masarwa",
+                  "screen_name": "LamaMasarwa",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 7,
+                  "friends_count": 53,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 10:10:46 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 2,
+                  "lang": "he",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552047388873859072/itk5cPx6_normal.png",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552047388873859072/itk5cPx6_normal.png",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/2959453074/1420454122",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2962184776,
+                  "id_str": "2962184776",
+                  "name": "elkholfi khaola",
+                  "screen_name": "ElkholfiKhaoula",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 4,
+                  "friends_count": 115,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 14:42:54 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 0,
+                  "lang": "fr",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png",
+                  "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": true,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2959764566,
+                  "id_str": "2959764566",
+                  "name": "Brando",
+                  "screen_name": "BrandoBb19",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 5,
+                  "friends_count": 214,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 14:28:49 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 1,
+                  "lang": "en-AU",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552113782160252928/JxnwvMaC_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552113782160252928/JxnwvMaC_normal.jpeg",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/2959764566/1420469158",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2959474814,
+                  "id_str": "2959474814",
+                  "name": "Atank suhenda",
+                  "screen_name": "Atank009",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 12,
+                  "friends_count": 279,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 09:52:00 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": 10800,
+                  "time_zone": "Nairobi",
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 1,
+                  "lang": "id",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552041513400545282/eXUV9Rs8_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552041513400545282/eXUV9Rs8_normal.jpeg",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/2959474814/1420468612",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2962030155,
+                  "id_str": "2962030155",
+                  "name": "Андрей Лазарев",
+                  "screen_name": "hausrus",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 18,
+                  "friends_count": 191,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 13:41:28 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 2,
+                  "lang": "ru",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552098040828264448/2RdQDKRP_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552098040828264448/2RdQDKRP_normal.jpeg",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2961113165,
+                  "id_str": "2961113165",
+                  "name": "Nathalia Dhiovane",
+                  "screen_name": "71559af524da491",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 22,
+                  "friends_count": 384,
+                  "listed_count": 0,
+                  "created_at": "Sun Jan 04 23:07:58 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 0,
+                  "lang": "pt",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/551879344495534080/JGrpUo0Q_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/551879344495534080/JGrpUo0Q_normal.jpeg",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/2961113165/1420413259",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 472009153,
+                  "id_str": "472009153",
+                  "name": "Lorenzo Soffiati",
+                  "screen_name": "Lory_270",
+                  "location": "Rizza",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 10,
+                  "friends_count": 71,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 23 14:08:12 +0000 2012",
+                  "favourites_count": 5,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 49,
+                  "lang": "it",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/423524106307665920/mNxLIIvg_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/423524106307665920/mNxLIIvg_normal.jpeg",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/472009153/1389811098",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2960050714,
+                  "id_str": "2960050714",
+                  "name": "kovacs lenard",
+                  "screen_name": "kovacs_lenard",
+                  "location": "Románia Szilágymegye Szilágyzo",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 1,
+                  "friends_count": 20,
+                  "listed_count": 0,
+                  "created_at": "Sun Jan 04 10:35:34 +0000 2015",
+                  "favourites_count": 1,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 1,
+                  "lang": "hu",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/551699050530369536/UHoRpeSy_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/551699050530369536/UHoRpeSy_normal.jpeg",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2959761230,
+                  "id_str": "2959761230",
+                  "name": "Thai Minh Phuong",
+                  "screen_name": "minhphuongthai",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 3,
+                  "friends_count": 32,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 14:26:29 +0000 2015",
+                  "favourites_count": 3,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 1,
+                  "lang": "en",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552109455341395968/soBjm83D_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552109455341395968/soBjm83D_normal.jpeg",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2276738430,
+                  "id_str": "2276738430",
+                  "name": "Veteran Maids, LLC",
+                  "screen_name": "VeteranMaids",
+                  "location": "Alexandria, VA",
+                  "profile_location": null,
+                  "url": "http://VeteranMaids.com",
+                  "description": "Veteran Maids, LLC is a Professional Maid & Carpet Cleaning company for both residential and commercial properties.",
+                  "protected": false,
+                  "followers_count": 4274,
+                  "friends_count": 1707,
+                  "listed_count": 2,
+                  "created_at": "Sat Jan 04 22:36:51 +0000 2014",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": true,
+                  "verified": false,
+                  "statuses_count": 121,
+                  "lang": "en",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "310573",
+                  "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/453831537448861696/p2USQJzn.png",
+                  "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/453831537448861696/p2USQJzn.png",
+                  "profile_background_tile": true,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/431233323927498752/iFh9mt5h_normal.png",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/431233323927498752/iFh9mt5h_normal.png",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/2276738430/1405776681",
+                  "profile_link_color": "52545E",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_sidebar_fill_color": "C0DFEC",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": false,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2959714152,
+                  "id_str": "2959714152",
+                  "name": "عبدالرحمن",
+                  "screen_name": "dhoom39025256",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 4,
+                  "friends_count": 134,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 14:19:31 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 0,
+                  "lang": "ar",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_3_normal.png",
+                  "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_3_normal.png",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": true,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2962147516,
+                  "id_str": "2962147516",
+                  "name": "laurent meunier",
+                  "screen_name": "laurentmeunie15",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 3,
+                  "friends_count": 60,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 14:16:39 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": -28800,
+                  "time_zone": "Tijuana",
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 5,
+                  "lang": "fr",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552106648450256896/EJ_uMfeN_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552106648450256896/EJ_uMfeN_normal.jpeg",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 46135775,
+                  "id_str": "46135775",
+                  "name": "Sven Markschläger",
+                  "screen_name": "markschlaeger",
+                  "location": "Berlin, Germany",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 22,
+                  "friends_count": 264,
+                  "listed_count": 0,
+                  "created_at": "Wed Jun 10 15:20:20 +0000 2009",
+                  "favourites_count": 0,
+                  "utc_offset": 3600,
+                  "time_zone": "Paris",
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 0,
+                  "lang": "en",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "131516",
+                  "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/550968824749494272/DOk_jyJR.jpeg",
+                  "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/550968824749494272/DOk_jyJR.jpeg",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/550962973842223104/tg9r2aKF_normal.png",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/550962973842223104/tg9r2aKF_normal.png",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/46135775/1420195860",
+                  "profile_link_color": "131516",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": false,
+                  "default_profile": false,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2958779324,
+                  "id_str": "2958779324",
+                  "name": "Jdj Jdj",
+                  "screen_name": "jjdj156",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "ابوعبدالله",
+                  "protected": false,
+                  "followers_count": 14,
+                  "friends_count": 90,
+                  "listed_count": 0,
+                  "created_at": "Sun Jan 04 18:46:30 +0000 2015",
+                  "favourites_count": 1,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 2,
+                  "lang": "ar",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/551812267205881856/0WcgsQpG_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/551812267205881856/0WcgsQpG_normal.jpeg",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2962131838,
+                  "id_str": "2962131838",
+                  "name": "uğur kurnaz",
+                  "screen_name": "ukurnaz1907",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 10,
+                  "friends_count": 52,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 14:06:43 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 1,
+                  "lang": "tr",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552105077473689600/G2UzTB6k_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552105077473689600/G2UzTB6k_normal.jpeg",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 492266607,
+                  "id_str": "492266607",
+                  "name": "Savaliya amit (AV)",
+                  "screen_name": "Savaliyaamit46",
+                  "location": "ahmedabad",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 118,
+                  "friends_count": 801,
+                  "listed_count": 0,
+                  "created_at": "Tue Feb 14 14:40:30 +0000 2012",
+                  "favourites_count": 5,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": true,
+                  "verified": false,
+                  "statuses_count": 9,
+                  "lang": "en",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/546167106870341633/oDxmrGyd_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/546167106870341633/oDxmrGyd_normal.jpeg",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/492266607/1419051359",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2962128304,
+                  "id_str": "2962128304",
+                  "name": "elideangelo correa ",
+                  "screen_name": "elideangelo22",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "",
+                  "protected": false,
+                  "followers_count": 6,
+                  "friends_count": 114,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 14:03:34 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 0,
+                  "lang": "pt",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+                  "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": true,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 2962024185,
+                  "id_str": "2962024185",
+                  "name": "Coda di Tomcat",
+                  "screen_name": "CodaDiTomcat",
+                  "location": "Firenze",
+                  "profile_location": null,
+                  "url": "http://codatomcat.blogspot.it/",
+                  "description": "Riflessioni sulle praterie dello sviluppo software",
+                  "protected": false,
+                  "followers_count": 2,
+                  "friends_count": 54,
+                  "listed_count": 0,
+                  "created_at": "Mon Jan 05 13:37:11 +0000 2015",
+                  "favourites_count": 0,
+                  "utc_offset": null,
+                  "time_zone": null,
+                  "geo_enabled": false,
+                  "verified": false,
+                  "statuses_count": 2,
+                  "lang": "it",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "C0DEED",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_tile": false,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/552096612407734272/RwHUx8RM_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/552096612407734272/RwHUx8RM_normal.jpeg",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/2962024185/1420465187",
+                  "profile_link_color": "0084B4",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": true,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                },
+                {
+                  "id": 62533549,
+                  "id_str": "62533549",
+                  "name": "Andre C. S. Araujo",
+                  "screen_name": "andrecristh",
+                  "location": "",
+                  "profile_location": null,
+                  "url": null,
+                  "description": "Meu mundo minha vida.",
+                  "protected": false,
+                  "followers_count": 7,
+                  "friends_count": 23,
+                  "listed_count": 0,
+                  "created_at": "Mon Aug 03 14:59:57 +0000 2009",
+                  "favourites_count": 2,
+                  "utc_offset": -7200,
+                  "time_zone": "Brasilia",
+                  "geo_enabled": true,
+                  "verified": false,
+                  "statuses_count": 13,
+                  "lang": "pt",
+                  "contributors_enabled": false,
+                  "is_translator": false,
+                  "is_translation_enabled": false,
+                  "profile_background_color": "131516",
+                  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme14/bg.gif",
+                  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme14/bg.gif",
+                  "profile_background_tile": true,
+                  "profile_image_url": "http://pbs.twimg.com/profile_images/551838098074894336/UrVaQgmo_normal.jpeg",
+                  "profile_image_url_https": "https://pbs.twimg.com/profile_images/551838098074894336/UrVaQgmo_normal.jpeg",
+                  "profile_banner_url": "https://pbs.twimg.com/profile_banners/62533549/1420403424",
+                  "profile_link_color": "009999",
+                  "profile_sidebar_border_color": "EEEEEE",
+                  "profile_sidebar_fill_color": "EFEFEF",
+                  "profile_text_color": "333333",
+                  "profile_use_background_image": true,
+                  "default_profile": false,
+                  "default_profile_image": false,
+                  "following": false,
+                  "follow_request_sent": false,
+                  "notifications": false,
+                  "muting": false
+                }
+              ],
+              "next_cursor": 1489467234237774933,
+              "next_cursor_str": "1489467234237774933",
+              "previous_cursor": 0,
+              "previous_cursor_str": "0"
+            }
+            
+## Following Users  [/friends/list.json]
++ Parameters
+    + screen_name (optional, string, `noradio`) ... The screen name of the user for whom to befriend.
+    + user_id (optional, string, `12345`) ... The ID of the user for whom to befriend.
+    + cursor (optional, integer, `12893764510938`) ... Causes the results to be broken into pages. If no cursor is provided, a value of -1 will be assumed, which is the first “page.”
+    + count (optional, integer, `42`) ... The number of users to return per page, up to a maximum of 200. Defaults to 20.
+    + skip_status (optional, boolean, `false`) ... When set to either true, t or 1, statuses will not be included in the returned user objects. If set to any other value, statuses will be included.
+    + include_user_entities (optional, boolean, `false`) .. The user object entities node will not be included when set to false.
+### /friends/list.json [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
++ Response 200 (application/json)
+
+            {
+              "previous_cursor": 0,
+              "previous_cursor_str": "0",
+              "next_cursor": 1333504313713126852,
+              "users": [
+                {
+                  "profile_sidebar_fill_color": "252429",
+                  "profile_sidebar_border_color": "181A1E",
+                  "profile_background_tile": false,
+                  "name": "Sylvain Carle",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2838630046/4b82e286a659fae310012520f4f756bb_normal.png",
+                  "created_at": "Thu Jan 18 00:10:45 +0000 2007",
+                  "location": "San Francisco",
+                  "follow_request_sent": false,
+                  "profile_link_color": "2FC2EF",
+                  "is_translator": false,
+                  "id_str": "657693",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 1973,
+                  "url": "http://afroginthevalley.com/",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/657693/1353537845",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2838630046/4b82e286a659fae310012520f4f756bb_normal.png",
+                  "utc_offset": -18000,
+                  "id": 657693,
+                  "profile_use_background_image": true,
+                  "listed_count": 324,
+                  "profile_text_color": "666666",
+                  "lang": "en",
+                  "followers_count": 4993,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme9/bg.gif",
+                  "profile_background_color": "1A1B1F",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Eastern Time (US & Canada)",
+                  "description": "Developer Advocate at Twitter.\r\n\r\nInternet, opensource, media & geo/local geek.\r\n\r\nFollow @sylvain for LANG=FR.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/images/themes/theme9/bg.gif",
+                  "statuses_count": 8504,
+                  "friends_count": 2743,
+                  "following": true,
+                  "screen_name": "froginthevalley"
+                },
+                {
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_background_tile": true,
+                  "name": "Site Streams Beta",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2284174702/1tyzesnfmqhqsl4xuf5a_normal.png",
+                  "created_at": "Fri Aug 27 18:04:38 +0000 2010",
+                  "location": "San Francisco, CA",
+                  "follow_request_sent": false,
+                  "profile_link_color": "0084B4",
+                  "is_translator": false,
+                  "id_str": "183709371",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 0,
+                  "url": "http://twitter.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/183709371/1347395034",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2284174702/1tyzesnfmqhqsl4xuf5a_normal.png",
+                  "utc_offset": null,
+                  "id": 183709371,
+                  "profile_use_background_image": true,
+                  "listed_count": 195,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 9732,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/656938621/vvhperynuny1q6em9i7k.png",
+                  "profile_background_color": "C0DEED",
+                  "verified": true,
+                  "geo_enabled": false,
+                  "time_zone": null,
+                  "description": "This account is no longer in use.  Please see @twitterapi for announcements about the Sitestreams API.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/656938621/vvhperynuny1q6em9i7k.png",
+                  "statuses_count": 178,
+                  "friends_count": 5,
+                  "following": true,
+                  "screen_name": "sitestreams"
+                },
+                {
+                  "profile_sidebar_fill_color": "C7E0FF",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_background_tile": true,
+                  "name": "Arne Roomann-Kurrik",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/24229162/arne001_normal.jpg",
+                  "created_at": "Thu Jul 19 15:58:07 +0000 2007",
+                  "location": "Scan Francesco",
+                  "follow_request_sent": false,
+                  "profile_link_color": "0084B4",
+                  "is_translator": false,
+                  "id_str": "7588892",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 798,
+                  "url": "http://start.roomanna.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/7588892/1347312754",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/24229162/arne001_normal.jpg",
+                  "utc_offset": -28800,
+                  "id": 7588892,
+                  "profile_use_background_image": true,
+                  "listed_count": 172,
+                  "profile_text_color": "000000",
+                  "lang": "en",
+                  "followers_count": 3876,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/342542280/background7.png",
+                  "profile_background_color": "8FC1FF",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Developer Advocate at Twitter, practitioner of dark sandwich arts. ",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/342542280/background7.png",
+                  "statuses_count": 3245,
+                  "friends_count": 589,
+                  "following": true,
+                  "screen_name": "kurrik"
+                },
+                {
+                  "profile_sidebar_fill_color": "252429",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_background_tile": true,
+                  "name": "Sean Cook",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2757776645/23872cfcee4dc7279facb8fb0a6cb559_normal.png",
+                  "created_at": "Sat May 09 17:58:22 +0000 2009",
+                  "location": "San Francisco",
+                  "follow_request_sent": false,
+                  "profile_link_color": "2FC2EF",
+                  "is_translator": false,
+                  "id_str": "38895958",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 698,
+                  "url": null,
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/38895958/1346803787",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2757776645/23872cfcee4dc7279facb8fb0a6cb559_normal.png",
+                  "utc_offset": -28800,
+                  "id": 38895958,
+                  "profile_use_background_image": false,
+                  "listed_count": 198,
+                  "profile_text_color": "666666",
+                  "lang": "en",
+                  "followers_count": 11191,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/495742332/purty_wood.png",
+                  "profile_background_color": "42454B",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "I taught your phone that thing you like.  The Mobile Partner Engineer @Twitter. ",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/495742332/purty_wood.png",
+                  "statuses_count": 2909,
+                  "friends_count": 1217,
+                  "following": true,
+                  "screen_name": "theSeanCook"
+                },
+                {
+                  "profile_sidebar_fill_color": "C0DFEC",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_background_tile": true,
+                  "name": "Ian Chan",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2467844172/image_normal.jpg",
+                  "created_at": "Thu Mar 05 06:42:32 +0000 2009",
+                  "location": "Toronto ✈ San Francisco",
+                  "follow_request_sent": false,
+                  "profile_link_color": "0084B4",
+                  "is_translator": true,
+                  "id_str": "22891211",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 3267,
+                  "url": "http://chanian.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/22891211/1348559711",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2467844172/image_normal.jpg",
+                  "utc_offset": -18000,
+                  "id": 22891211,
+                  "profile_use_background_image": true,
+                  "listed_count": 186,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 7356,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/663303208/kpzmxbnwvxk9cfr7hpdw.png",
+                  "profile_background_color": "022330",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Eastern Time (US & Canada)",
+                  "description": "Canadian, UofT Alumn, Platform Engineer for @twitter, poker player.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/663303208/kpzmxbnwvxk9cfr7hpdw.png",
+                  "statuses_count": 6892,
+                  "friends_count": 622,
+                  "following": true,
+                  "screen_name": "chanian"
+                },
+                {
+                  "profile_sidebar_fill_color": "000B17",
+                  "profile_sidebar_border_color": "F7B565",
+                  "profile_background_tile": false,
+                  "name": "akashgarg",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/1800189528/image1328232461_normal.png",
+                  "created_at": "Fri Sep 21 18:23:07 +0000 2007",
+                  "location": "San Francisco",
+                  "follow_request_sent": false,
+                  "profile_link_color": "448668",
+                  "is_translator": false,
+                  "id_str": "9019482",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 57,
+                  "url": "http://www.linkedin.com/in/akashdgarg",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/9019482/1348061531",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/1800189528/image1328232461_normal.png",
+                  "utc_offset": -28800,
+                  "id": 9019482,
+                  "profile_use_background_image": false,
+                  "listed_count": 120,
+                  "profile_text_color": "004358",
+                  "lang": "en",
+                  "followers_count": 2649,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/378356748/x56a919dd9dbd34581a3f162af04a4e8.jpg",
+                  "profile_background_color": "001329",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Director of Engineering, Growth Team @ Twitter",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/378356748/x56a919dd9dbd34581a3f162af04a4e8.jpg",
+                  "statuses_count": 462,
+                  "friends_count": 1445,
+                  "following": true,
+                  "screen_name": "akashgarg"
+                },
+                {
+                  "profile_sidebar_fill_color": "C0DFEC",
+                  "profile_sidebar_border_color": "A8C7F7",
+                  "profile_background_tile": false,
+                  "name": "Ben Ward",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/1409204408/2011_normal.png",
+                  "created_at": "Mon Nov 13 13:39:24 +0000 2006",
+                  "location": "San Francisco, CA",
+                  "follow_request_sent": false,
+                  "profile_link_color": "0084B4",
+                  "is_translator": true,
+                  "id_str": "12249",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 16749,
+                  "url": "http://benward.me",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/12249/1348598804",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/1409204408/2011_normal.png",
+                  "utc_offset": -28800,
+                  "id": 12249,
+                  "profile_use_background_image": true,
+                  "listed_count": 388,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 7982,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/637103983/474kwsozag6mi0hkvwmo.jpeg",
+                  "profile_background_color": "022330",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Frontend software engineer at @twitter, purveyor of shitty puns everywhere, @benwwward and @thepastrybox writer, @microformats community admin. Bit of a whiner.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/637103983/474kwsozag6mi0hkvwmo.jpeg",
+                  "statuses_count": 15542,
+                  "friends_count": 588,
+                  "following": true,
+                  "screen_name": "BenWard"
+                },
+                {
+                  "profile_sidebar_fill_color": "F0F0F0",
+                  "profile_sidebar_border_color": "000000",
+                  "profile_background_tile": false,
+                  "name": "Kenneth P Kufluk",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2734520194/9e5843b95abce47b7056b17ce7bbc18f_normal.png",
+                  "created_at": "Thu Mar 05 13:05:04 +0000 2009",
+                  "location": "San Francisco, California",
+                  "follow_request_sent": false,
+                  "profile_link_color": "333333",
+                  "is_translator": false,
+                  "id_str": "22915745",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 1280,
+                  "url": "http://kenneth.kufluk.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/22915745/1353469520",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2734520194/9e5843b95abce47b7056b17ce7bbc18f_normal.png",
+                  "utc_offset": -28800,
+                  "id": 22915745,
+                  "profile_use_background_image": true,
+                  "listed_count": 62,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 3925,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/173989056/silly_twitter_bg.jpg",
+                  "profile_background_color": "161712",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "The neth is essential.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/173989056/silly_twitter_bg.jpg",
+                  "statuses_count": 10009,
+                  "friends_count": 222,
+                  "following": true,
+                  "screen_name": "kpk"
+                },
+                {
+                  "profile_sidebar_fill_color": "F6F6F6",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_background_tile": false,
+                  "name": "Seth Bindernagel",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2867434205/c5bf4196b723e7d0494bd4b5ccf79346_normal.jpeg",
+                  "created_at": "Thu Mar 15 21:49:02 +0000 2007",
+                  "location": "San Francisco, CA",
+                  "follow_request_sent": false,
+                  "profile_link_color": "FF3300",
+                  "is_translator": false,
+                  "id_str": "1249881",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 278,
+                  "url": null,
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/1249881/1348078082",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2867434205/c5bf4196b723e7d0494bd4b5ccf79346_normal.jpeg",
+                  "utc_offset": -28800,
+                  "id": 1249881,
+                  "profile_use_background_image": true,
+                  "listed_count": 82,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 3341,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/698916047/dcd323b0502e46e4d3a337caf8694aef.jpeg",
+                  "profile_background_color": "709397",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "I work for Twitter and I love Cleveland Sports. https://about.me/binder",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/698916047/dcd323b0502e46e4d3a337caf8694aef.jpeg",
+                  "statuses_count": 1863,
+                  "friends_count": 690,
+                  "following": true,
+                  "screen_name": "binder"
+                },
+                {
+                  "profile_sidebar_fill_color": "A0C5C7",
+                  "profile_sidebar_border_color": "86A4A6",
+                  "profile_background_tile": false,
+                  "name": "Jason Costa",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/1751674923/new_york_beard_normal.jpg",
+                  "created_at": "Wed May 28 00:20:15 +0000 2008",
+                  "location": "",
+                  "follow_request_sent": false,
+                  "profile_link_color": "FF3300",
+                  "is_translator": true,
+                  "id_str": "14927800",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 1053,
+                  "url": "http://www.jason-costa.blogspot.com/",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/1751674923/new_york_beard_normal.jpg",
+                  "utc_offset": -28800,
+                  "id": 14927800,
+                  "profile_use_background_image": true,
+                  "listed_count": 161,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 11874,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme6/bg.gif",
+                  "profile_background_color": "709397",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Platform at Twitter",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/images/themes/theme6/bg.gif",
+                  "statuses_count": 5745,
+                  "friends_count": 175,
+                  "following": true,
+                  "screen_name": "jasoncosta"
+                },
+                {
+                  "profile_sidebar_fill_color": "FEFEFE",
+                  "profile_sidebar_border_color": "000000",
+                  "profile_background_tile": true,
+                  "name": "Connor Sears",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2659620048/aca7116831caaeb410b8b98be63c8874_normal.jpeg",
+                  "created_at": "Mon Mar 19 16:19:32 +0000 2007",
+                  "location": "Palo Alto",
+                  "follow_request_sent": false,
+                  "profile_link_color": "0084B4",
+                  "is_translator": false,
+                  "id_str": "1523501",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 2716,
+                  "url": "http://connorsears.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/1523501/1351629702",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2659620048/aca7116831caaeb410b8b98be63c8874_normal.jpeg",
+                  "utc_offset": -28800,
+                  "id": 1523501,
+                  "profile_use_background_image": true,
+                  "listed_count": 81,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 3055,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/698065178/00ca3a67587ddb2792d9b05a45cf42b1.jpeg",
+                  "profile_background_color": "262626",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Co-creator of Ratchet (@GoRatchet). Product Designer formerly at Twitter. I bless the rains down in Africa.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/698065178/00ca3a67587ddb2792d9b05a45cf42b1.jpeg",
+                  "statuses_count": 3992,
+                  "friends_count": 195,
+                  "following": true,
+                  "screen_name": "connors"
+                },
+                {
+                  "profile_sidebar_fill_color": "C5DAE9",
+                  "profile_sidebar_border_color": "777777",
+                  "profile_background_tile": false,
+                  "name": "Arnaud Meunier",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/1374353291/image_normal.jpg",
+                  "created_at": "Mon Mar 02 22:53:50 +0000 2009",
+                  "location": "San Francisco, CA",
+                  "follow_request_sent": false,
+                  "profile_link_color": "21759B",
+                  "is_translator": true,
+                  "id_str": "22548447",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 108,
+                  "url": "http://twitoaster.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/22548447/1348188118",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/1374353291/image_normal.jpg",
+                  "utc_offset": -28800,
+                  "id": 22548447,
+                  "profile_use_background_image": false,
+                  "listed_count": 944,
+                  "profile_text_color": "555555",
+                  "lang": "en",
+                  "followers_count": 22315,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/107336160/twitter-background-twitoaster.png",
+                  "profile_background_color": "E4ECF0",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "French expat. Eng manager at Twitter.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/107336160/twitter-background-twitoaster.png",
+                  "statuses_count": 1926,
+                  "friends_count": 325,
+                  "following": true,
+                  "screen_name": "rno"
+                },
+                {
+                  "profile_sidebar_fill_color": "DAECF4",
+                  "profile_sidebar_border_color": "C6E2EE",
+                  "profile_background_tile": true,
+                  "name": "Jeremy ⎋ Cloud",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2785231602/3697a603c0a067328d87beb15d2b59f0_normal.jpeg",
+                  "created_at": "Mon Jun 09 17:00:58 +0000 2008",
+                  "location": "Somerville, MA",
+                  "follow_request_sent": false,
+                  "profile_link_color": "1F98C7",
+                  "is_translator": false,
+                  "id_str": "15062340",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 123,
+                  "url": "http://about.me/jeremy.cloud",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/15062340/1351613822",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2785231602/3697a603c0a067328d87beb15d2b59f0_normal.jpeg",
+                  "utc_offset": -18000,
+                  "id": 15062340,
+                  "profile_use_background_image": true,
+                  "listed_count": 96,
+                  "profile_text_color": "663B12",
+                  "lang": "en",
+                  "followers_count": 3494,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/480149151/NSTexturedFullScreenBackgroundColor.png",
+                  "profile_background_color": "C6E2EE",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Eastern Time (US & Canada)",
+                  "description": "Former snake charmer.  Engineer at Twitter.  Father of @baby_cloud.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/480149151/NSTexturedFullScreenBackgroundColor.png",
+                  "statuses_count": 1514,
+                  "friends_count": 302,
+                  "following": true,
+                  "screen_name": "jeremycloud"
+                },
+                {
+                  "profile_sidebar_fill_color": "F6FFD1",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_background_tile": true,
+                  "name": "Glen D Sanford",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/917780110/0629072227-00_normal.jpg",
+                  "created_at": "Wed Apr 14 20:59:58 +0000 2010",
+                  "location": "Alameda, CA",
+                  "follow_request_sent": false,
+                  "profile_link_color": "009999",
+                  "is_translator": false,
+                  "id_str": "133031077",
+                  "default_profile": false,
+                  "contributors_enabled": false,
+                  "favourites_count": 38,
+                  "url": "http://glen.nu",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/133031077/1351918195",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/917780110/0629072227-00_normal.jpg",
+                  "utc_offset": -28800,
+                  "id": 133031077,
+                  "profile_use_background_image": true,
+                  "listed_count": 56,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 2680,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/658791112/hxelotrdy3h7qga87mv1.jpeg",
+                  "profile_background_color": "131516",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Software Engineering Manager for @twittereng, fundamentally ok guy",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/658791112/hxelotrdy3h7qga87mv1.jpeg",
+                  "statuses_count": 1516,
+                  "friends_count": 147,
+                  "following": true,
+                  "screen_name": "9len"
+                },
+                {
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_background_tile": true,
+                  "name": "Support",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2320882833/2whv6cuhvbal751uss8u_normal.png",
+                  "created_at": "Thu Dec 04 18:51:57 +0000 2008",
+                  "location": "Twitter HQ",
+                  "follow_request_sent": false,
+                  "profile_link_color": "0084B4",
+                  "is_translator": false,
+                  "id_str": "17874544",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 45,
+                  "url": "http://support.twitter.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/17874544/1347394418",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2320882833/2whv6cuhvbal751uss8u_normal.png",
+                  "utc_offset": -32400,
+                  "id": 17874544,
+                  "profile_use_background_image": true,
+                  "listed_count": 11116,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 1901267,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/656929496/y6jd4l68p18hrm52f0ez.png",
+                  "profile_background_color": "C0DEED",
+                  "verified": true,
+                  "geo_enabled": true,
+                  "time_zone": "Alaska",
+                  "description": "Updates from Twitter User Support. We're unable to assist with account suspension/verification.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/656929496/y6jd4l68p18hrm52f0ez.png",
+                  "statuses_count": 2154,
+                  "friends_count": 30,
+                  "following": true,
+                  "screen_name": "Support"
+                },
+                {
+                  "profile_sidebar_fill_color": "DDEEF6",
+                  "profile_sidebar_border_color": "C0DEED",
+                  "profile_background_tile": false,
+                  "name": "Matt Harris",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/554181350/matt_normal.jpg",
+                  "created_at": "Sat Feb 17 20:49:54 +0000 2007",
+                  "location": "SFO/LHR/YVR/JAX/IAD",
+                  "follow_request_sent": false,
+                  "profile_link_color": "0084B4",
+                  "is_translator": false,
+                  "id_str": "777925",
+                  "default_profile": true,
+                  "contributors_enabled": true,
+                  "favourites_count": 235,
+                  "url": "http://www.themattharris.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/777925/1351367661",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/554181350/matt_normal.jpg",
+                  "utc_offset": -28800,
+                  "id": 777925,
+                  "profile_use_background_image": true,
+                  "listed_count": 304,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 8208,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+                  "profile_background_color": "C0DEED",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Maybe the Nick Fury of @twitter. Married to @cindyli. Kryptonite hurts me.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+                  "statuses_count": 4551,
+                  "friends_count": 433,
+                  "following": true,
+                  "screen_name": "themattharris"
+                },
+                {
+                  "profile_sidebar_fill_color": "A0C5C7",
+                  "profile_sidebar_border_color": "FFFFFF",
+                  "profile_background_tile": false,
+                  "name": "April Underwood",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/2623063815/image_normal.jpg",
+                  "created_at": "Thu Apr 12 00:11:07 +0000 2007",
+                  "location": "San Francisco, CA",
+                  "follow_request_sent": false,
+                  "profile_link_color": "14A395",
+                  "is_translator": false,
+                  "id_str": "4265731",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 3024,
+                  "url": "http://www.aprilunderwood.com",
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/4265731/1352050638",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/2623063815/image_normal.jpg",
+                  "utc_offset": -28800,
+                  "id": 4265731,
+                  "profile_use_background_image": false,
+                  "listed_count": 348,
+                  "profile_text_color": "333333",
+                  "lang": "en",
+                  "followers_count": 16976,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/662816188/cbyxvatdol1hg8r7c1qb.jpeg",
+                  "profile_background_color": "F4F5B1",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "You can't drink from a martini glass while sitting in a rocking chair. I work at @Twitter.",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/662816188/cbyxvatdol1hg8r7c1qb.jpeg",
+                  "statuses_count": 8452,
+                  "friends_count": 1328,
+                  "following": true,
+                  "screen_name": "aunder"
+                },
+                {
+                  "profile_sidebar_fill_color": "121212",
+                  "profile_sidebar_border_color": "000000",
+                  "profile_background_tile": false,
+                  "name": "Kelton Lynn",
+                  "profile_image_url": "http://a0.twimg.com/profile_images/384067053/n209356_35266280_356207_2_normal.jpg",
+                  "created_at": "Mon Mar 30 16:30:42 +0000 2009",
+                  "location": "San Francisco",
+                  "follow_request_sent": false,
+                  "profile_link_color": "999999",
+                  "is_translator": false,
+                  "id_str": "27674040",
+                  "default_profile": false,
+                  "contributors_enabled": true,
+                  "favourites_count": 421,
+                  "url": null,
+                  "profile_banner_url": "https://si0.twimg.com/profile_banners/27674040/1348163748",
+                  "profile_image_url_https": "https://si0.twimg.com/profile_images/384067053/n209356_35266280_356207_2_normal.jpg",
+                  "utc_offset": -28800,
+                  "id": 27674040,
+                  "profile_use_background_image": true,
+                  "listed_count": 174,
+                  "profile_text_color": "505050",
+                  "lang": "en",
+                  "followers_count": 10971,
+                  "protected": false,
+                  "notifications": false,
+                  "profile_background_image_url_https": "https://si0.twimg.com/profile_background_images/424627076/aged_planks_843_10949.jpg",
+                  "profile_background_color": "000000",
+                  "verified": false,
+                  "geo_enabled": true,
+                  "time_zone": "Pacific Time (US & Canada)",
+                  "description": "Mobile BizDev at Twitter, former Boulderite, bleed Cardinal, SF transplant, love athletics/competition, consumer tech, entrepreneurship, family/friends...life",
+                  "default_profile_image": false,
+                  "profile_background_image_url": "http://a0.twimg.com/profile_background_images/424627076/aged_planks_843_10949.jpg",
+                  "statuses_count": 3166,
+                  "friends_count": 1216,
+                  "following": true,
+                  "screen_name": "keltonlynn"
+                }
+              ],
+              "next_cursor_str": "1333504313713126852"
+            }
+            
+## Get User Profile  [/users/show.json]
++ Parameters
+    + screen_name (required, string, `noradio`) ... The screen name of the user for whom to befriend.
+    + user_id (required, string, `12345`) ... The ID of the user for whom to befriend.
+    + include_entities (optional, boolean, `false`) .. The entities node will be disincluded when set to false.
+### /users/show.json [GET]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
++ Response 200 (application/json)
+
+            {
+              "id": 2244994945,
+              "id_str": "2244994945",
+              "name": "TwitterDev",
+              "screen_name": "TwitterDev",
+              "location": "Internet",
+              "profile_location": null,
+              "description": "Developer and Platform Relations @Twitter. We are developer advocates. We can't answer all your questions, but we listen to all of them!",
+              "url": "https://t.co/66w26cua1O",
+              "entities": {
+                "url": {
+                  "urls": [
+                    {
+                      "url": "https://t.co/66w26cua1O",
+                      "expanded_url": "https://dev.twitter.com/",
+                      "display_url": "dev.twitter.com",
+                      "indices": [
+                        0,
+                        23
+                      ]
+                    }
+                  ]
+                },
+                "description": {
+                  "urls": []
+                }
+              },
+              "protected": false,
+              "followers_count": 429831,
+              "friends_count": 1535,
+              "listed_count": 999,
+              "created_at": "Sat Dec 14 04:35:55 +0000 2013",
+              "favourites_count": 1713,
+              "utc_offset": -25200,
+              "time_zone": "Pacific Time (US & Canada)",
+              "geo_enabled": true,
+              "verified": true,
+              "statuses_count": 2588,
+              "lang": "en",
+              "status": {
+                "created_at": "Tue Aug 30 10:52:20 +0000 2016",
+                "id": 770574870841331700,
+                "id_str": "770574870841331712",
+                "text": "@lesterhan oops! Thanks for pointing that out, looks like the image is no longer available! we will fix in a future doc version! ^AP",
+                "truncated": false,
+                "entities": {
+                  "hashtags": [],
+                  "symbols": [],
+                  "user_mentions": [
+                    {
+                      "screen_name": "lesterhan",
+                      "name": "Lester Han",
+                      "id": 126025266,
+                      "id_str": "126025266",
+                      "indices": [
+                        0,
+                        10
+                      ]
+                    }
+                  ],
+                  "urls": []
+                },
+                "source": "<a href="//about.twitter.com/products/tweetdeck%5C%22" rel="\"nofollow\"">TweetDeck</a>",
+                "in_reply_to_status_id": 770332467626672100,
+                "in_reply_to_status_id_str": "770332467626672129",
+                "in_reply_to_user_id": 126025266,
+                "in_reply_to_user_id_str": "126025266",
+                "in_reply_to_screen_name": "lesterhan",
+                "geo": null,
+                "coordinates": null,
+                "place": null,
+                "contributors": null,
+                "is_quote_status": false,
+                "retweet_count": 0,
+                "favorite_count": 0,
+                "favorited": false,
+                "retweeted": false,
+                "lang": "en"
+              },
+              "contributors_enabled": false,
+              "is_translator": false,
+              "is_translation_enabled": false,
+              "profile_background_color": "FFFFFF",
+              "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+              "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+              "profile_background_tile": false,
+              "profile_image_url": "http://pbs.twimg.com/profile_images/530814764687949824/npQQVkq8_normal.png",
+              "profile_image_url_https": "https://pbs.twimg.com/profile_images/530814764687949824/npQQVkq8_normal.png",
+              "profile_banner_url": "https://pbs.twimg.com/profile_banners/2244994945/1396995246",
+              "profile_link_color": "0084B4",
+              "profile_sidebar_border_color": "FFFFFF",
+              "profile_sidebar_fill_color": "DDEEF6",
+              "profile_text_color": "333333",
+              "profile_use_background_image": false,
+              "has_extended_profile": false,
+              "default_profile": false,
+              "default_profile_image": false,
+              "following": false,
+              "follow_request_sent": false,
+              "notifications": false,
+              "translator_type": "regular"
+            }
+
+## Change User Profile  [/account/update_profile.json]
++ Parameters
+    + name (optional, string, `Marcel Molina`) ... Full name associated with the profile. Maximum of 20 characters.
+    + url (optional, string, `http://project.ioni.st`) ... URL associated with the profile. Will be prepended with “http://” if not present. Maximum of 100 characters.
+    + location (optional, string, `San Francisco, CA`) ... The city or country describing where the user of the account is located. The contents are not normalized or geocoded in any way. Maximum of 30 characters.
+    + description (optional, string, `Flipped my wig at age 22 and it never grew back. Also: I work at Twitter.`) ... A description of the user owning the account. Maximum of 160 characters.
+    + profile_link_color (optional, string, `0000FF`) ... Sets a hex value that controls the color scheme of links used on the authenticating user’s profile page on twitter.com. This must be a valid hexadecimal value, and may be either three or six characters (ex: F00 or FF0000).
+    + include_entities (optional, boolean, `false`) ... The entities node will not be included when set to false.
+    + skip_status (optional, boolean, `false`) ... When set to either true, t or 1, statuses will not be included in the returned user objects. If set to any other value, statuses will be included.
+### /account/update_profile.json [POST]
++ Request
+    + Headers
+    
+            Authorization: OAuth oauth_consumer_key="ONru9tPq2h89sqU9uhjUxrWaU",oauth_token="722030522659115009-cYhbNFIjDSurhqnwIgfG19ghnYoLHF0",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1473445162",oauth_nonce="3a36b630ac126f68593fdbeab6b62be7",oauth_version="1.0",oauth_signature="okbehmZGD8PVpWnkOZXvOFQ0gBE%3D"
++ Response 201 (application/json)
+
+            {
+                "contributors_enabled": false,
+                "created_at": "Thu Aug 23 19:45:07 +0000 2012",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "Keep calm and rock on.",
+                "favourites_count": 0,
+                "follow_request_sent": false,
+                "followers_count": 0,
+                "following": false,
+                "friends_count": 10,
+                "geo_enabled": true,
+                "id": 776627022,
+                "id_str": "776627022",
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 0,
+                "location": "San Francisco, CA",
+                "name": "Sean Cook",
+                "notifications": false,
+                "profile_background_color": "9AE4E8",
+                "profile_background_image_url": "http://a0.twimg.com/images/themes/theme16/bg.gif",
+                "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme16/bg.gif",
+                "profile_background_tile": false,
+                "profile_image_url": "http://a0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+                "profile_image_url_https": "https://si0.twimg.com/profile_images/2550256790/hv5rtkvistn50nvcuydl_normal.jpeg",
+                "profile_link_color": "0084B4",
+                "profile_sidebar_border_color": "BDDCAD",
+                "profile_sidebar_fill_color": "DDFFCC",
+                "profile_text_color": "333333",
+                "profile_use_background_image": true,
+                "protected": false,
+                "screen_name": "s0c1alm3dia",
+                "show_all_inline_media": false,
+                "statuses_count": 0,
+                "time_zone": "Pacific Time (US & Canada)",
+                "url": "http://cnn.com",
+                "utc_offset": -28800,
+                "verified": false
+            }
